@@ -1,0 +1,8 @@
+Noch zu ergaenzen (Platzhalter in index.html bereits verlinkt):
+
+  /public/favicon.svg          Browser-Tab-Icon
+  /public/apple-touch-icon.png 180x180
+  /public/og-image.png         1200x630, Link-Vorschau
+
+Ausserdem in index.html die Domain anpassen:
+  https://www.anvero.de/  ->  eure echte Domain

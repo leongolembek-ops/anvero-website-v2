@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
+  body {
+    margin: 0;
+    font-family: Inter, system-ui, sans-serif;
+    color: #1e293b;
+    background: #fff;
+    -webkit-font-smoothing: antialiased;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: .01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: .01ms !important;
+    }
+  }
+}
+
+@layer components {
+  .section-kicker {
+    @apply mb-4 text-[.72rem] font-extrabold uppercase tracking-[.15em] text-brand-600;
+  }
+  .section-title {
+    @apply font-display text-[clamp(2rem,4.5vw,3rem)] font-black leading-[1.05] tracking-[-.04em] text-ink;
+  }
+  .section-copy {
+    @apply mt-5 max-w-2xl text-[15.5px] leading-7 text-slate-600;
+  }
+  .field {
+    @apply min-h-[46px] rounded-[.65rem] border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none transition
+           focus:border-brand-600 focus:ring-4 focus:ring-brand-600/12;
+  }
+  .field-label {
+    @apply flex flex-col gap-2 text-xs font-bold text-slate-700;
+  }
+}
