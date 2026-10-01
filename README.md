@@ -78,10 +78,59 @@ Abhaengigkeiten installieren, dann den Dev-Server starten (Standard-Vite-Skripte
 - FAQ: aria-controls zeigte auf nicht existierende Elemente. Behoben.
 - Formular-Label "(optional)" brach in eine eigene Zeile. Behoben.
 
+## Umsetzungsschritt 1 aus dem Audit
+
+- `.gitignore` angelegt (u. a. `.env`, `node_modules`, `dist`; `.env.example` bleibt erhalten).
+- Hero-CTA "Ablauf ansehen" fuehrt jetzt zu `#ablauf` statt zu `#produkt`.
+- Kontraste: `slate-400` auf hellem Grund entfernt, neues Token `approve-700` fuer Gold-Icons,
+  Mindestschriftgroesse 12 px (vorher 10-11 px). Tab-Beschriftungen der Vorschau erst ab 520 px.
+- Produktvorschau: alle Schritte liegen in einer Grid-Zelle, Hoehe bleibt konstant. Auto-Rotation
+  pausiert zusaetzlich bei Maus oder Tastaturfokus.
+- Attrappen-Button "Pruefen und freigeben" ist jetzt eine reine Statusanzeige.
+- Formular: Feldfehler pro Feld mit `aria-invalid` und `aria-describedby`, Fokus auf erstes
+  fehlerhaftes Feld, Fokus auf Bestaetigung nach Erfolg, Eingaben getrimmt, `maxLength`.
+- `focus:ring-brand-600/12` war keine gueltige Tailwind-3-Stufe, jetzt `/[.12]`.
+- `public/robots.txt` und `public/sitemap.xml` angelegt (siehe Schritt 2 fuer die endgueltige Domain).
+
+## Umsetzungsschritt 2: Domain, Rechtliches, Vercel
+
+- **Domain:** Die einzige Website-URL ist `https://anvero.tech`. Sie steht fest in `index.html`
+  (canonical, og:url, og:image, twitter:image), `public/robots.txt`, `public/sitemap.xml` und als
+  Konstante `SITE_URL` in `src/siteConfig.js`. `info@anvero.de` ist die E-Mail-Adresse, keine Website-URL.
+- **Seiten:** `/impressum` und `/datenschutz` (`src/pages/`). Footer und Header verlinken sie.
+  Die Datenschutzerklaerung ist ein **Entwurf** und nicht rechtlich geprueft (interner Hinweis im Code).
+  Offene Angaben: siehe `LEGAL-TODO.md`.
+- **Stammdaten zentral:** `src/siteConfig.js` (Firmen- und Kontaktdaten, Calendly-Link).
+- **Routing ohne Zusatzpaket:** `src/App.jsx` waehlt die Seite anhand des Pfads. `vercel.json` liefert
+  `/impressum` und `/datenschutz` per Rewrite auf `index.html` aus, damit der Direktaufruf funktioniert.
+  Unbekannte Pfade ergeben weiterhin einen echten 404.
+- **Calendly (aktiviert):** Der Buchungslink `https://calendly.com/leongolembek` steht als Konstante
+  `CALENDLY_URL` in `src/siteConfig.js`. Der Button "Online-Termin buchen" im Demo-Bereich ist aktiv und
+  oeffnet die **externe Calendly-Seite in einem neuen Tab** (`target="_blank"`, `rel="noopener noreferrer"`).
+  Calendly wird nicht eingebettet. Nur Links mit `https://calendly.com/` werden akzeptiert; bei einer
+  ungueltigen URL faellt der Button auf eine deaktivierte Darstellung zurueck.
+- **Formular (zusaetzlich zu Calendly):** Das Kontaktformular besteht weiter. Das **Formular-Backend ist
+  noch nicht eingerichtet** (`VITE_FORM_ENDPOINT` ist nicht gesetzt). Im Produktions-Build meldet das Formular
+  deshalb ehrlich, dass es nicht verfuegbar ist, und nennt die E-Mail-Adresse. Es wird nirgends behauptet,
+  dass E-Mails versendet werden. Im Dev-Server wird der Erfolg nur simuliert.
+- **Header, Footer, Icons, Buttons** liegen jetzt in `src/components/`.
+
+## Rechtlicher Status
+
+**Impressum (`src/pages/Impressum.jsx`) und Datenschutzerklaerung (`src/pages/Datenschutz.jsx`) sind
+Entwuerfe.** Sie wurden nicht rechtlich geprueft und muessen vor dem Livegang fachkundig geprueft werden.
+Die Datenschutzerklaerung enthaelt einen Abschnitt zu Calendly (Abschnitt 6), der bewusst nur ein
+Grundgeruest ist: Anbieter, Rechtsgrundlage, Speicherdauer, Auftragsverarbeitung und Drittlandtransfer
+muessen noch geprueft und ergaenzt werden. Die vollstaendige Liste steht in `LEGAL-TODO.md`.
+
 ## Vor dem Livegang zwingend
 
-1. `VITE_FORM_ENDPOINT` setzen und einmal echt testen.
-2. Impressum und Datenschutzerklaerung anlegen. Impressumspflicht nach § 5 DDG.
-3. Datenschutz-FAQ: der sichtbare Platzhaltertext steht noch auf der Seite.
-4. favicon.svg, apple-touch-icon.png, og-image.png in /public ablegen. Sonst 404.
-5. Domain in index.html pruefen.
+1. Formular-Backend einrichten: Dienst waehlen, `VITE_FORM_ENDPOINT` setzen und einmal echt testen
+   (oder das Formular bewusst ausblenden). Solange das fehlt, erreicht das Formular niemanden.
+2. `LEGAL-TODO.md` abarbeiten und Impressum sowie Datenschutzerklaerung (beide Entwuerfe, auch der
+   Calendly-Abschnitt) rechtlich pruefen lassen.
+3. favicon.svg, apple-touch-icon.png, og-image.png in /public ablegen. Sonst 404.
+4. Einmal `npm install` und `npm run build` ausfuehren und die Seiten im Browser pruefen
+   (der Code wurde ohne Build erstellt, weil auf dem Entwicklungsrechner kein Node vorhanden war).
+   Dabei den Calendly-Button testen: neuer Tab, richtiger Link.
+5. Vercel-Projekt, Domain `anvero.tech` und Weiterleitungen pruefen (siehe `LEGAL-TODO.md`, Abschnitt Technik).

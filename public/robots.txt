@@ -1,0 +1,6 @@
+# Auf einer Staging-/Testumgebung stattdessen "Disallow: /" verwenden.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://anvero.tech/sitemap.xml

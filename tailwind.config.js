@@ -24,6 +24,8 @@ export default {
           100: '#fbeecd',
           300: '#e2bd60',
           600: '#b8860b',
+          /* 700: Icons und Text auf approve-50 mit ausreichendem Kontrast (ca. 4,4:1) */
+          700: '#946c09',
           800: '#7a5c07',
         },
         ink: '#102322',
