@@ -25,4 +25,9 @@ export const CONTACT = {
    Datenschutzerklaerung um den Terminanbieter ergaenzen (siehe LEGAL-TODO.md). */
 const CALENDLY_URL = "https://calendly.com/leongolembek";
 
+/* Beschriftung des Calendly-Buttons. Der Link oben ist der allgemeine Profil-Link, ein 20-Minuten-Termin
+   ist nicht belegt. Erst auf "20-Minuten-Demo buchen" aendern, wenn in Calendly ein 20-Minuten-Termin
+   eingerichtet ist und CALENDLY_URL direkt auf diesen Termin zeigt. */
+export const CALENDLY_LABEL = "Demo-Termin auswählen";
+
 export const CALENDLY_HREF = CALENDLY_URL.startsWith("https://calendly.com/") ? CALENDLY_URL : null;

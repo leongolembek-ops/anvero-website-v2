@@ -233,9 +233,12 @@ function Hero() {
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Button href="#demo" className="w-full sm:w-auto">20-Minuten-Demo anfragen</Button>
-            <Button href="#ablauf" secondary icon={null} className="w-full sm:w-auto">Ablauf ansehen</Button>
+            <CalendlyButton size="lg" className="w-full sm:w-auto" />
+            <Button href="#ablauf" secondary icon={null} className="min-h-14 w-full text-base sm:w-auto">Ablauf ansehen</Button>
           </div>
+          <p className="mt-4 text-sm text-slate-600">
+            Oder <a href="#demo" className="font-semibold text-brand-700 underline underline-offset-2 hover:text-brand-900">Anfrage per Formular</a>
+          </p>
 
           {/* Kontrollsignal direkt unter dem CTA statt erst in Sektion 4 */}
           <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-[12.5px] font-semibold text-slate-500">
@@ -582,14 +585,14 @@ function Demo() {
 
         {/* Alternative Kontaktwege neben dem Formular. Der Calendly-Link kommt aus src/siteConfig.js. */}
         <div className="mx-auto mt-8 flex max-w-[680px] flex-col items-center gap-3 text-center">
-          <CalendlyButton className="w-full sm:w-auto" />
+          <CalendlyButton size="lg" className="w-full sm:w-auto" />
           <p className="text-[13px] leading-6 text-slate-600">
             Sie erreichen uns auch direkt:{" "}
             <a href={`mailto:${CONTACT.email}`} className="font-semibold text-brand-700 underline underline-offset-2">{CONTACT.email}</a>
             {" · "}
             <a href={CONTACT.phoneHref} className="font-semibold text-brand-700 underline underline-offset-2">{CONTACT.phoneDisplay}</a>
           </p>
-          <p className="mt-2 text-xs font-bold uppercase tracking-[.12em] text-slate-600">oder per Formular</p>
+          <p className="mt-2 text-xs font-bold uppercase tracking-[.12em] text-slate-600">Oder Anfrage per Formular</p>
         </div>
 
         {state === "success" ? (
@@ -632,7 +635,7 @@ function Demo() {
               className="mt-2 flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-brand-600 px-5 text-sm font-bold text-white transition hover:bg-brand-700 disabled:cursor-not-allowed disabled:opacity-60 focus:outline-none focus-visible:ring-4 focus-visible:ring-brand-600/25">
               {state === "loading"
                 ? <><span className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white" />Wird gesendet …</>
-                : <><Icon name="send" size={17} />Demo anfragen</>}
+                : <><Icon name="send" size={17} />Anfrage senden</>}
             </button>
             <p className="mt-3 text-center text-[12px] text-slate-600">
               Keine Newsletter-Anmeldung.

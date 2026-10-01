@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Icon, Button } from "./ui";
-import { CONTACT } from "../siteConfig";
+import { Icon, CalendlyButton } from "./ui";
+import { CONTACT, CALENDLY_HREF, CALENDLY_LABEL } from "../siteConfig";
 
 /* Alle Anker laufen ueber "/#..." statt "#...": So funktionieren Header und Footer
    auf der Startseite (Scroll ohne Neuladen) und auf Unterseiten wie /impressum. */
@@ -25,7 +25,7 @@ export function Header() {
             <a key={h} href={h} className="text-sm font-semibold text-slate-600 transition hover:text-slate-950">{l}</a>
           ))}
         </nav>
-        <Button href="/#demo" icon={null} className="hidden min-h-10 px-4 py-2 sm:inline-flex">Demo anfragen</Button>
+        <CalendlyButton size="sm" className="hidden sm:inline-flex" />
         <button type="button" onClick={() => setOpen(!open)} aria-expanded={open} aria-label={open ? "Menü schließen" : "Menü öffnen"}
           className="grid h-11 w-11 place-items-center rounded-xl border border-slate-200 bg-white text-slate-800 focus:outline-none focus-visible:ring-4 focus-visible:ring-brand-600/25 lg:hidden">
           <Icon name={open ? "x" : "menu"} size={18} />
@@ -38,7 +38,7 @@ export function Header() {
               <a key={h} href={h} onClick={() => setOpen(false)}
                 className="rounded-lg px-3 py-3 text-sm font-bold text-slate-700 hover:bg-slate-50">{l}</a>
             ))}
-            <Button href="/#demo" onClick={() => setOpen(false)} className="mt-2 w-full">Demo anfragen</Button>
+            <CalendlyButton onClick={() => setOpen(false)} className="mt-2 w-full" />
           </div>
         </nav>
       )}
@@ -69,7 +69,12 @@ export function Footer() {
           <div>
             <p className="text-xs font-bold uppercase tracking-wider text-slate-300">Kontakt und Rechtliches</p>
             <div className="mt-4 flex flex-col gap-3">
-              <a href="/#demo" className={link}>Demo anfragen</a>
+              {CALENDLY_HREF && (
+                <a href={CALENDLY_HREF} target="_blank" rel="noopener noreferrer" className={link}>
+                  {CALENDLY_LABEL}<span className="sr-only"> (öffnet in neuem Tab)</span>
+                </a>
+              )}
+              <a href="/#demo" className={link}>Anfrage per Formular</a>
               <a href={`mailto:${CONTACT.email}`} className={link}>{CONTACT.email}</a>
               <a href="/impressum" className={link}>Impressum</a>
               <a href="/datenschutz" className={link}>Datenschutz</a>

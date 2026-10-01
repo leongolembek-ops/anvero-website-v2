@@ -1,4 +1,4 @@
-import { CALENDLY_HREF } from "../siteConfig";
+import { CALENDLY_HREF, CALENDLY_LABEL } from "../siteConfig";
 
 export const Icon = ({ name, size = 20, className = "" }) => {
   const paths = {
@@ -42,22 +42,31 @@ export function Button({ children, href = "#demo", secondary = false, icon = "ar
   );
 }
 
-/* Terminbuchung. Solange in siteConfig.js kein gueltiger Calendly-Link steht, ist der Button
-   deaktiviert und fuehrt nirgendwohin (kein toter oder erfundener Link). */
-export function CalendlyButton({ className = "" }) {
-  const base = "inline-flex min-h-12 items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold";
+/* Terminbuchung bei Calendly (Haupt-CTA). Oeffnet immer in einem neuen Tab.
+   size: "lg" = Hero (56 px hoch), "md" = Standard (48 px), "sm" = Header (44 px).
+   Nur bei ungueltiger URL in siteConfig.js faellt der Button auf eine deaktivierte Darstellung zurueck. */
+const CALENDLY_SIZES = {
+  lg: "min-h-14 px-7 py-4 text-base",
+  md: "min-h-12 px-5 py-3 text-sm",
+  sm: "min-h-11 px-4 py-2 text-sm",
+};
+
+export function CalendlyButton({ size = "md", className = "", onClick }) {
+  const base = `group inline-flex items-center justify-center gap-2 rounded-xl font-semibold ${CALENDLY_SIZES[size]}`;
   if (CALENDLY_HREF) {
     return (
-      <a href={CALENDLY_HREF} target="_blank" rel="noopener noreferrer"
-        className={`${base} border border-brand-600 bg-white text-brand-700 transition hover:bg-brand-50 focus:outline-none focus-visible:ring-4 focus-visible:ring-brand-600/25 ${className}`}>
-        <Icon name="calendar" size={17} />Online-Termin buchen
+      <a href={CALENDLY_HREF} target="_blank" rel="noopener noreferrer" onClick={onClick}
+        className={`${base} bg-brand-600 text-white shadow-[0_8px_22px_rgba(23,107,104,.25)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-700 focus:outline-none focus-visible:ring-4 focus-visible:ring-brand-600/25 ${className}`}>
+        <Icon name="calendar" size={size === "lg" ? 20 : 17} />
+        {CALENDLY_LABEL}
+        <span className="sr-only"> (öffnet in neuem Tab)</span>
       </a>
     );
   }
   return (
     <button type="button" disabled aria-disabled="true"
       className={`${base} cursor-not-allowed border border-slate-300 bg-slate-100 text-slate-600 ${className}`}>
-      <Icon name="calendar" size={17} />Online-Termin buchen
+      <Icon name="calendar" size={size === "lg" ? 20 : 17} />{CALENDLY_LABEL}
     </button>
   );
 }
